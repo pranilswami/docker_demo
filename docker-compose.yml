@@ -4,7 +4,7 @@ services:
     image: mysql
     environment:
       MYSQL_DATABASE: docker_db1
-      MYSQL_USER: pranilswami
+      MYSQL_USER: root
       MYSQL_PASSWORD: 123
       MYSQL_ROOT_PASSWORD: 123
     ports:
@@ -16,6 +16,13 @@ services:
 
   app:
     build: .
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/docker_db1
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQL8Dialect
     ports:
       - "8081:8081"
     networks:
